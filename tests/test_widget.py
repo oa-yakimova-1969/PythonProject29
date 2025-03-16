@@ -1,6 +1,6 @@
 import pytest
-rom src.widget import mask_account_card
-
+from src.widget import mask_account_card
+from src.widget import get_date
 
 @pytest.mark.parametrize("input_string, expected_string", [
     ("Maestro 1596837868705199", "Maestro 1596 83** **** 5199"),
@@ -26,3 +26,13 @@ def test_mask_account_card_incorrect():
 def test_mask_account_card_empty():
     assert mask_account_card("") == "Ошибка: некорректный ввод."
 
+@pytest.fixture
+def date():
+    return "2024-03-11T02:26:18.671407"
+
+def test_get_date(date):
+    assert get_date(date) == "11.03.2024"
+def test_get_date_incorrect():
+    assert get_date("T03:36:20.507342") == "Введены некорректные данные"
+def test_get_date_empty():
+    assert get_date("") == "Введены некорректные данные"
